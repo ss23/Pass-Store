@@ -29,9 +29,9 @@ if (isset($_POST['submit'])) {
 
 		if (user_authenticate($_POST['username'], $_POST['password'])) {
 			if (!empty($redirect)) {
-				header('Location: ' . $redirect);
+				echo '<meta http-equiv="refresh" content="1;url="' . $redirect . '" >';
 			} else {
-				header('Location: /index.php');
+				echo '<meta http-equiv="refresh" content="1" >';
 			}
 			die(); // Just in case?
 		} else {
