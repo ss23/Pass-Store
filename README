@@ -1,1 +1,13 @@
 Store passwords? I'm not sure
+
+INSTALL
+
+Start by importing the MySQL.
+Then make the /keys directory writable by the PHP CLI user
+Run ./generateUser Username Password (make sure it's chmod'd +x)
+Manually insert the given Username and Password into the database (the ID doesn't matter)
+Navigate to /html in your browser, and log in with the username and password you gave.
+
+Encryption and Decryption works atm
+
+TODO: Generate a one time use session decryption key when users log in, destroy it on log out

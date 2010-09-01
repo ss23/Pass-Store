@@ -106,6 +106,25 @@ class User {
 		$stmt->setFetchMode(PDO::FETCH_INTO, $this);
 		$stmt->execute();
 	}
+
+	function decrypt($Encrypted) {
+		// Check that the private key we're using for decryption exists
+		if ((is_readable(PATH . '/keys/' . $this->username . '.pem')) && (!empty($this->decryptionKey))) {
+			$PrivKey = openssl_get_privatekey(file_get_contents(PATH . '/keys/' . $this->username . '.pem'), $this->decryptionKey);
+			openssl_private_decrypt($Encrypted, $Decrypted, $PrivKey);
+			return $Decrypted;
+		}
+		return false;
+	}
+
+	function encrypt($PlainText) {
+		if (is_readable(PATH . 'keys/' . $this->username . '.pub')) {
+			openssl_public_encrypt($PlainText, $Encrypted, file_get_contents(PATH . '/keys/' . $this->username . '.pub'));
+			return $Encrypted;
+		}
+	var_dump(PATH . 'keys/' . $this->username . '.pub');
+		return false;
+	}
 }
 
 ?>

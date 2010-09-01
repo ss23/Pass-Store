@@ -7,9 +7,6 @@ require_once '../config/config.php';
 require_once PATH.'html/include/MyPDO.php';
 $GLOBALS['pdo'] = new MyPDO();
 
-// User Authentication and sessions
-require_once PATH.'html/include/Sessions.php';
-
 // The library (lib) function
 function lib($Library) {
 	if (file_exists(PATH."html/include/$Library.php")) {
@@ -23,5 +20,7 @@ function lib($Library) {
 	throw new Exception('Could not load library '.$Library);
 }
 
+// Authentication and Sessions
+require_once PATH.'html/include/Sessions.php';
 // Custom Classes go here
 lib('Sanitize');

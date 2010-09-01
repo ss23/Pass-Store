@@ -1,5 +1,7 @@
 <?php
 
+lib('User');
+
 session_start();
 
 global $pdo;
