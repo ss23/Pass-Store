@@ -63,7 +63,8 @@ function user_authenticate($Username, $Password) {
 		// Some website told me it's a good idea to regenerate session ID's when a user logs in
 		session_obliterate();
 		session_start();
-		new User($Username, user_key($Password, $Username));
+		$user = new User($Username, user_key($Password, $Username));
+		$_SESSION['user'] = &$user;
 		return true;
 	} else {
 		return false;
@@ -108,12 +109,14 @@ class User {
 	}
 
 	function decrypt($Encrypted) {
+		echo "decrpyting";
 		// Check that the private key we're using for decryption exists
 		if ((is_readable(PATH . '/keys/' . $this->username . '.pem')) && (!empty($this->decryptionKey))) {
 			$PrivKey = openssl_get_privatekey(file_get_contents(PATH . '/keys/' . $this->username . '.pem'), $this->decryptionKey);
 			openssl_private_decrypt($Encrypted, $Decrypted, $PrivKey);
 			return $Decrypted;
 		}
+		echo "not readable";
 		return false;
 	}
 

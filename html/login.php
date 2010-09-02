@@ -33,7 +33,8 @@ if (isset($_POST['submit'])) {
 			} else {
 				echo '<meta http-equiv="refresh" content="1" >';
 			}
-			die(); // Just in case?
+			print_r($_SESSION);
+			//die(); // Just in case?
 		} else {
 			$errors['auth'] = true;
 		}
