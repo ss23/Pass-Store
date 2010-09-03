@@ -1,4 +1,6 @@
 <?
+
+define('NO_LOGIN', true);
 require "include/global.php";
 
 if ($_SESSION['user']) {

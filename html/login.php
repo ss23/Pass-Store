@@ -1,19 +1,22 @@
 <?php
 
+define('NO_LOGIN', true);
+
 require "include/global.php";
 
+if (isset($_REQUEST['redirect'])) {
+	$redirect = $_REQUEST['redirect'];
+} else {
+	$redirect = '/index.php';
+}
+
 if (isset($_SESSION['user'])) {
-	header('Location: index.php');
+	header('Location: ' . $redirect);
 }
 
 if (isset($_POST['submit'])) {
 	// Oh the joy of manual form validation
-	
-	// Set our redirect if needed
-	if (!empty($_POST['redirect'])) {
-		$redirect = $_POST['redirect'];
-	}
-	
+		
 	// First, check all compulsary fields aren't blank
 	if (empty($_POST['username'])) {
 		$errors['username'] = true;
@@ -28,13 +31,8 @@ if (isset($_POST['submit'])) {
 		lib('User');
 
 		if (user_authenticate($_POST['username'], $_POST['password'])) {
-			if (!empty($redirect)) {
-				echo '<meta http-equiv="refresh" content="1;url="' . $redirect . '" >';
-			} else {
-				echo '<meta http-equiv="refresh" content="1" >';
-			}
-			print_r($_SESSION);
-			//die(); // Just in case?
+			header('Location: ' . $redirect);
+			die();
 		} else {
 			$errors['auth'] = true;
 		}
@@ -51,12 +49,19 @@ if (isset($_POST['submit'])) {
 require 'include/header.php';
 
 ?>
-<form action="/login.php" method="post">
+<div id="login_form_container">
+<form action="/login.php" method="post" id="login_form">
+	<h4>Sign In</h4>
+	<label for="username">Username:</label>
 	<input type="text" name="username" >
 	<?php
 	if ($errors['username']) {
 		echo "<p class='error username'>Please enter a username</p>";
-	} ?>
+	} else {
+		echo "<br>";
+	}
+	?>
+	<label for="password">Password:</label>
 	<input type="password" name="password" >
 	<?php
 	if ($errors['password']) {
@@ -64,13 +69,17 @@ require 'include/header.php';
 	}
 	if (!empty($redirect)) {
 		echo '<input type="hidden" name="redirect" value="' . $redirect . '" >';
-	} ?>
-	<input type="submit" value="Log in" name="submit">
+	} else {
+		echo "<br>";
+	}
+	?>
+	<input type="submit" value="Sign In" name="submit">
 	<?php
 	if ($errors['auth']) {
 		echo "<p class='error auth'>Invalid username or password.</p>";
 	} ?>
 </form>
+</div>
 
 <?php
 

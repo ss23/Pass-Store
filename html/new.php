@@ -2,10 +2,6 @@
 
 require 'include/global.php';
 
-if (!isset($_SESSION['user'])) {
-	header('Location: /login.php');
-}
-
 if (isset($_POST['create'])) {
 	// I LOVE manual form validation
 	// TODO: Write it

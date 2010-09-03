@@ -11,8 +11,6 @@ require ('html/include/functions/User.php');
 
 echo "Username: " . s($argv[1]) . "\n";
 echo "Hashed Password: " . user_hash($argv[2], $argv[1]) . "\n";
-var_dump($argv[2]);
-var_dump(s($argv[1]));
 
 echo "Generating OpenSSL Keys...\n";
 

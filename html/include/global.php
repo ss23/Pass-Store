@@ -24,3 +24,9 @@ function lib($Library) {
 require_once PATH.'html/include/Sessions.php';
 // Custom Classes go here
 lib('Sanitize');
+
+if (!defined('NO_LOGIN')) {
+	if (!isset($_SESSION['user'])) {
+		header('Location: /login.php?redirect=' . $_SERVER['PHP_SELF']);
+	}
+}
