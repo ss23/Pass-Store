@@ -49,11 +49,11 @@ if (isset($_POST['submit'])) {
 require 'include/header.php';
 
 ?>
-<div id="login_form_container">
+<div class="form_container" id="login_form_container">
 <form action="/login.php" method="post" id="login_form">
 	<h4>Sign In</h4>
 	<label for="username">Username:</label>
-	<input type="text" name="username" >
+	<input type="text" name="username" required>
 	<?php
 	if ($errors['username']) {
 		echo "<p class='error username'>Please enter a username</p>";
@@ -62,7 +62,7 @@ require 'include/header.php';
 	}
 	?>
 	<label for="password">Password:</label>
-	<input type="password" name="password" >
+	<input type="password" name="password" required >
 	<?php
 	if ($errors['password']) {
 		echo "<p class='error password'>Please enter a password</p>";

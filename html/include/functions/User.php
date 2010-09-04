@@ -61,8 +61,8 @@ function user_authenticate($Username, $Password) {
 
 	if ($stmt->fetchColumn() > 0) {
 		// Some website told me it's a good idea to regenerate session ID's when a user logs in
-		session_obliterate();
-		session_start();
+//		session_obliterate();
+//		session_start();
 		$user = new User($Username, user_key($Password, $Username));
 		$_SESSION['user'] = &$user;
 		return true;

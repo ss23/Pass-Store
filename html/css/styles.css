@@ -40,22 +40,34 @@ input[type="submit"] {
 	font-size: smaller;
 }
 
-#login_form_container {
-	width: 400px;
+.form_container {
 	border: 1px solid #C3D9FF;
 }
 
-#login_form {
+.form_container > form {
 	padding: 5px 20px 20px;
-	margin: 5px;
+	margin: 3px;
 	background-color: #E8EEFA;
+}
+
+#login_form_container {
+	width: 400px;
 	text-align: center;
 }
 
-#login_form label {
-	width: 100px;
-}
 #login_form input {
 	margin: 5px 10px;
 }
 
+#new_password_form {
+	width: 235px;
+}
+
+#new_password_form label {
+	display: block;
+	margin-top: 10px;
+}
+
+#new_password_form input[type="submit"] {
+	margin-top: 10px;
+}

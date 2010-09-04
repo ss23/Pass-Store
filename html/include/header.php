@@ -16,8 +16,8 @@
 <div class="title-bar">
 	<?php
 	if (isset($_SESSION['user'])) { ?>
-	<a href="/index.php">Home</a>
-	<a href="/new.php">Add a Password</a>
+	<a href="/">Home</a>
+	<a href="/add_password.php">Add a Password</a>
 	<a href="#">Secure Notes</a>
 	
 	<a href="/logout.php">Logout</a>
