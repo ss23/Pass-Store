@@ -14,16 +14,24 @@ $stmt = $pdo->prepare('select `passwords`.*, `password_encrypted`.*
 $stmt->bindParam(':user_id', $user->id);
 $stmt->execute();
 
+
+$JSFiles[] = 'jquery.quicksearch.js';
+$JS .= <<<JS
+$(function () {
+        $('#password-list input').quicksearch('#password-list tbody tr');
+});
+JS;
+
 require 'include/header.php';
 ?>
 
 <table id="password-list">
 	<thead>
-		<tr><th class="input" colspan="5"><input type="search" placeholder="Search for a password" autofocus></th></tr>
-		<tr class="menu"><th></th><th class="inner-first">Name</th><th>Username</th><th class="inner-last">Password</th><th></th></tr>
+		<tr><th class="input" colspan="6"><input type="search" placeholder="Search for a password" autofocus></th></tr>
+		<tr class="menu"><th></th><th class="inner-first">Name</th><th>Username</th><th>Password</th><th class="inner-last">Description</th><th></th></tr>
 	</thead>
 	<tfoot>
-		<tr><td></td><td colspan="3"></td><td></td></tr>
+		<tr><td></td><td colspan="4"></td><td></td></tr>
 		<tr class="spacer"><td></td></tr>
 	</tfoot>
 	<tbody>
@@ -32,13 +40,19 @@ require 'include/header.php';
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$Password = $user->decrypt($row['blob']);
 
-	echo "<tr>";
-	echo "<td></td>";
-        echo "<td><a target=\"_blank\" href=\"" . htmlspecialchars($row['link'], ENT_QUOTES) . "\">" . htmlspecialchars($row['name'], ENT_QUOTES) . "</td>";
-        echo "<td>" . htmlspecialchars($row['username'], ENT_QUOTES) . "</td>";
-        echo "<td>" . htmlspecialchars($Password, ENT_QUOTES) . "</td>";
-	echo "<td></td>";
-	echo "</tr>";
+	if (strlen($row['description']) > 100) {
+		$Description = substr($row['description'], 0, 100) . '...';
+	} else {
+		$Description = $row['description'];
+	}
+	echo "<tr>\n\t\t";
+	echo "<td></td>\n\t\t";
+        echo '<td><a target="_blank" href="' . htmlspecialchars($row['link'], ENT_QUOTES) . '">' . htmlspecialchars($row['name'], ENT_QUOTES) . "</td>\n\t\t";
+        echo '<td>' . htmlspecialchars($row['username'], ENT_QUOTES) . "</td>\n\t\t";
+        echo '<td class="password"><span class="mask">********</span><span class="real">' . htmlspecialchars($Password, ENT_QUOTES) . "</span></td>\n\t\t";
+	echo '<td class="desc">' . htmlspecialchars($Description, ENT_QUOTES) . '<span class="full-desc">' . htmlspecialchars($row['description'], ENT_QUOTES) . "</span></td>\n\t\t";
+	echo "<td></td>\n\t";
+	echo "</tr>\n\t";
 }
 
 ?>

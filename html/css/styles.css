@@ -130,6 +130,27 @@ table a {
 	padding: 0px 15px;
 }
 
+#password-list tbody td.password:hover .mask {
+	display: none;
+}
+
+#password-list tbody td.password .real {
+	display: none;
+}
+
+#password-list tbody td.password:hover .real {
+	display: inline;
+}
+
+#password-list tbody td.desc {
+	color: #888;
+	font-size: small;
+}
+
+#password-list tbody td.desc span.full-desc {
+	display: none;
+}
+
 #password-list tbody tr:hover td {
 	background-color: #fff;
 }

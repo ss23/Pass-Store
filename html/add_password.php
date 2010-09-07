@@ -30,7 +30,7 @@ if ($pass_added) {
 	<br>
 	
 	<label for="url">URL:</label>
-	<input type="url" name="link">
+	<input type="url" name="link" value="http://www.">
 	<br>
 	
 	<br><br>
