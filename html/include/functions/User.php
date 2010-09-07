@@ -76,9 +76,8 @@ function user_logout() {
 }
 
 class User {
-	public $uuid;
+	public $id;
 	public $username;
-	public $disabled;
 
 	private $decryptionKey;
 	
@@ -98,7 +97,7 @@ class User {
 		global $pdo;
 		
 		$stmt = $pdo->prepare('
-			SELECT `uuid`, `disabled`, `username`
+			SELECT `id`, `username`
 			FROM `users`
 			WHERE 
 				`username` = :username
@@ -106,17 +105,16 @@ class User {
 		$stmt->bindParam(':username', $this->username); 
 		$stmt->setFetchMode(PDO::FETCH_INTO, $this);
 		$stmt->execute();
+		$stmt->fetch();
 	}
 
 	function decrypt($Encrypted) {
-		echo "decrpyting";
 		// Check that the private key we're using for decryption exists
 		if ((is_readable(PATH . '/keys/' . $this->username . '.pem')) && (!empty($this->decryptionKey))) {
 			$PrivKey = openssl_get_privatekey(file_get_contents(PATH . '/keys/' . $this->username . '.pem'), $this->decryptionKey);
 			openssl_private_decrypt($Encrypted, $Decrypted, $PrivKey);
 			return $Decrypted;
 		}
-		echo "not readable";
 		return false;
 	}
 
@@ -125,7 +123,6 @@ class User {
 			openssl_public_encrypt($PlainText, $Encrypted, file_get_contents(PATH . '/keys/' . $this->username . '.pub'));
 			return $Encrypted;
 		}
-	var_dump(PATH . 'keys/' . $this->username . '.pub');
 		return false;
 	}
 }

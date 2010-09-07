@@ -50,6 +50,16 @@ input[type="submit"] {
 	background-color: #E8EEFA;
 }
 
+table {
+	background-color: #C3D9FF;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+table a {
+	color: black;
+}
+
 #login_form_container {
 	width: 400px;
 	text-align: center;
@@ -70,4 +80,70 @@ input[type="submit"] {
 
 #new_password_form input[type="submit"] {
 	margin-top: 10px;
+}
+
+#password-list {
+	max-width: 800px
+}
+
+#password-list .menu th {
+	background-color: #7A7D7D;
+	padding: 2px 15px;
+	font-family: 'Segoe UI', Tahoma, Verdana;
+	color: #eee;
+	border-bottom: 1px solid #616464;
+	font-weight: bold;
+}
+
+#password-list .menu th:first-child, #password-list .menu th:last-child {
+	width: 0px;
+	border-bottom: none;
+	background-color: transparent;
+	padding: 5px;
+}
+
+#password-list th.inner-first {
+	border-top-left-radius: 5px;
+}
+
+#password-list th.inner-last {
+	border-top-right-radius: 5px;
+}
+
+#password-list .input {
+	padding: 15px;
+}
+
+#password-list input[type=search] {
+	width: 100%;
+}
+
+#password-list td:first-child, #password-list td:last-child {
+	background-color: transparent;
+	border-bottom: none;
+	padding: 0px;
+}
+
+#password-list tbody td {
+	background-color: #F7F7F7;
+	border-bottom: 1px solid #DEDEDE;
+	padding: 0px 15px;
+}
+
+#password-list tbody tr:hover td {
+	background-color: #fff;
+}
+
+#password-list tbody tr:hover td:first-child, #password-list tbody tr:hover td:last-child {
+	background-color: transparent;
+}
+
+#password-list tfoot td {
+	background-color: #7A7D7D;
+	height: 6px;
+}
+
+#password-list tfoot tr.spacer td {
+	background-color: transparent;
+	height: 10px;
 }
