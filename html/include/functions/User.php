@@ -31,19 +31,24 @@ function user_create($Username, $Password) {
 	$stmt = $pdo->prepare('
 		INSERT INTO `users`
 		(
-			`uuid`
-			, `username`
+			`username`
 			, `password`
 		) VALUES (
-			uuid()
-			, :username
+			:username
 			, :password
 		)');
 	$stmt->bindValue(':username', s($Username));
 	$stmt->bindValue(':password', user_hash($Password, $Username));
 	$stmt->execute();
+	$uid = $pdo->lastInsertId();
 	$stmt->closeCursor();
-	return true;
+
+	// Create a group for the new user
+	lib('Group');
+	$gid = group_create(s($Username), 'user');
+	group_add($gid, $uid);
+
+	return $uid;
 }
 
 function user_authenticate($Username, $Password) {
@@ -71,6 +76,7 @@ function user_authenticate($Username, $Password) {
 	}
 }
 
+
 function user_logout() {
 	unset($_SESSION['user']);
 }
@@ -78,6 +84,7 @@ function user_logout() {
 class User {
 	public $id;
 	public $username;
+	public $group;
 
 	private $decryptionKey;
 	

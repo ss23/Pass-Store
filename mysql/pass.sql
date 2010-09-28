@@ -1,17 +1,44 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.8.1deb5+lenny4
+-- version 2.11.8.1deb5+lenny6
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 01, 2010 at 03:47 PM
+-- Generation Time: Sep 28, 2010 at 01:51 PM
 -- Server version: 5.0.51
--- PHP Version: 5.2.6-1+lenny8
+-- PHP Version: 5.2.6-1+lenny9
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
 -- Database: `pass`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groups`
+--
+
+CREATE TABLE IF NOT EXISTS `groups` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `name` varchar(40) NOT NULL,
+  `type` enum('user','group') NOT NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `type` (`type`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `group_users`
+--
+
+CREATE TABLE IF NOT EXISTS `group_users` (
+  `group_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`group_id`,`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -32,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `passwords` (
   KEY `link` (`link`),
   KEY `name` (`name`),
   FULLTEXT KEY `description` (`description`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -71,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `last_active` datetime NOT NULL,
   `ip` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
 
@@ -85,5 +112,5 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(64) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `username` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 

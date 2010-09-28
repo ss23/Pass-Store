@@ -19,8 +19,11 @@ if ($pass_added) {
 }
 ?>
 
-<div class="form_container" id="new_password_form">
 <form action="add_password.php" method="post">
+
+<div class="form_container" id="new_password_form">
+	<div class="inner">
+
 	<label for="name">Name:</label>
 	<input type="name" name="name" autocomplete="off">
 	<br>
@@ -43,9 +46,35 @@ if ($pass_added) {
 	<br>
 	
 	<input type="submit" name='create' value="Create">
-</form>
+	
+	</div><!-- inner -->
 </div>
 
+<table id="groups">
+	<thead>
+		<tr class="menu">
+			<th></th>
+			<th class="inner-first"></th>
+			<th>Name</th>
+			<th class="inner-last"></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td></td>
+			<td colspan="5"></td>
+		</tr>
+		<tr class="spacer">
+			<td></td>
+		</tr>		
+	</tfoot>
+	<tbody>
+	
+	</tbody>
+</div>
+
+</form>
 <?php
 
 include 'include/footer.php';

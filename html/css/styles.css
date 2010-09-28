@@ -44,7 +44,7 @@ input[type="submit"] {
 	border: 1px solid #C3D9FF;
 }
 
-.form_container > form {
+.form_container > * {
 	padding: 5px 20px 20px;
 	margin: 3px;
 	background-color: #E8EEFA;
@@ -69,24 +69,11 @@ table a {
 	margin: 5px 10px;
 }
 
-#new_password_form {
-	width: 235px;
-}
-
-#new_password_form label {
-	display: block;
-	margin-top: 10px;
-}
-
-#new_password_form input[type="submit"] {
-	margin-top: 10px;
-}
-
 #password-list {
-	max-width: 800px
+	width: 800px
 }
 
-#password-list .menu th {
+table .menu th {
 	background-color: #7A7D7D;
 	padding: 2px 15px;
 	font-family: 'Segoe UI', Tahoma, Verdana;
@@ -95,36 +82,36 @@ table a {
 	font-weight: bold;
 }
 
-#password-list .menu th:first-child, #password-list .menu th:last-child {
+table .menu th:first-child, table .menu th:last-child {
 	width: 0px;
 	border-bottom: none;
 	background-color: transparent;
 	padding: 5px;
 }
 
-#password-list th.inner-first {
+table th.inner-first {
 	border-top-left-radius: 5px;
 }
 
-#password-list th.inner-last {
+table th.inner-last {
 	border-top-right-radius: 5px;
 }
 
-#password-list .input {
+table .input {
 	padding: 15px;
 }
 
-#password-list input[type=search] {
+table input[type=search] {
 	width: 100%;
 }
 
-#password-list td:first-child, #password-list td:last-child {
+table td:first-child, table td:last-child {
 	background-color: transparent;
 	border-bottom: none;
 	padding: 0px;
 }
 
-#password-list tbody td {
+table tbody td {
 	background-color: #F7F7F7;
 	border-bottom: 1px solid #DEDEDE;
 	padding: 0px 15px;
@@ -151,15 +138,15 @@ table a {
 	display: none;
 }
 
-#password-list tbody tr:hover td {
+table tbody tr:hover td {
 	background-color: #fff;
 }
 
-#password-list tbody tr:hover td:first-child, #password-list tbody tr:hover td:last-child {
+table tbody tr:hover td:first-child, table tbody tr:hover td:last-child {
 	background-color: transparent;
 }
 
-#password-list tfoot td {
+table tfoot td {
 	background-color: #7A7D7D;
 	height: 6px;
 }
@@ -168,3 +155,24 @@ table a {
 	background-color: transparent;
 	height: 10px;
 }
+
+#new_password_form {
+        width: 235px;
+	float: left;
+}
+
+#new_password_form label {
+        display: block;
+        margin-top: 10px;
+}
+
+#new_password_form input[type="submit"] {
+        margin-top: 10px;
+}
+
+
+#groups {
+	margin-left: 20px;
+	float: left;
+}
+

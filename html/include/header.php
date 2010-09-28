@@ -25,7 +25,8 @@
 <?php if (isset($_SESSION['user'])) { ?>
 	<a href="/">Home</a>
 	<a href="/add_password.php">Add a Password</a>
-	<a href="#">Secure Notes</a>
+	<a href="/groups.php">Groups</a>
+	<a href="/notes.php">Secure Notes</a>
 	<a href="/logout.php">Logout</a>
 	<? } else { ?>
 	<a href="/login.php">Login</a>
