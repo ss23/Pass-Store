@@ -1,11 +1,17 @@
 <?php
 
 function user_hash($Password, $Username) {
-	return hash('sha256', user_key($Password, $Username) . $Password);
+	return crypt(user_key($Password, $Username), '$6$rounds=5$' . md5(uniqid(rand(), true)));
 }
 
 function user_key($Password, $Username) {
-	return hash('sha256', $Password . s($Username));
+	return hash('sha512', $Password . $Username);
+}
+
+function user_compare($Password, $Username, $HashedPassword) {
+	var_dump(crypt(user_key($Password, $Username), $HashedPassword));
+	var_dump($HashedPassword);
+	return (crypt(user_key($Password, $Username), $HashedPassword) == $HashedPassword);
 }
 
 function user_exists($User) {
@@ -55,25 +61,23 @@ function user_authenticate($Username, $Password) {
 	global $pdo;
 
 	$stmt = $pdo->prepare('
-		SELECT count(*)
+		SELECT `password`
 		FROM `users`
-		WHERE `username` = :username AND
-		`password` = :password
+		WHERE `username` = :username
 	');
 	$stmt->bindValue(':username', $Username);
-	$stmt->bindValue(':password', user_hash($Password, $Username));
 	$stmt->execute();
 
-	if ($stmt->fetchColumn() > 0) {
-		// Some website told me it's a good idea to regenerate session ID's when a user logs in
-//		session_obliterate();
-//		session_start();
-		$user = new User($Username, user_key($Password, $Username));
-		$_SESSION['user'] = &$user;
-		return true;
-	} else {
-		return false;
+	if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		if (user_compare($Password, $Username, $row['password'])) {
+			$user = new User($Username, user_key($Password, $Username));
+	                $_SESSION['user'] = &$user;
+			die('worked');
+			session_regenerate_id();
+			return true;
+		} 
 	}
+	return false;
 }
 
 
