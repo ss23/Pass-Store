@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 28, 2010 at 01:51 PM
+-- Generation Time: Nov 24, 2010 at 10:49 PM
 -- Server version: 5.0.51
 -- PHP Version: 5.2.6-1+lenny9
 
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `type` (`type`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `group_users` (
   `group_id` int(10) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`group_id`,`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -57,9 +57,8 @@ CREATE TABLE IF NOT EXISTS `passwords` (
   KEY `active` (`active`),
   KEY `username` (`username`),
   KEY `link` (`link`),
-  KEY `name` (`name`),
-  FULLTEXT KEY `description` (`description`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -72,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `password_encrypted` (
   `user_id` int(10) unsigned NOT NULL,
   `blob` blob NOT NULL,
   PRIMARY KEY  (`password_id`,`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -85,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `password_properties` (
   `name` varchar(100) NOT NULL,
   `value` varchar(100) NOT NULL,
   PRIMARY KEY  (`password_id`,`name`(10))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -98,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `last_active` datetime NOT NULL,
   `ip` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -111,6 +110,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(60) NOT NULL,
   `password` varchar(64) NOT NULL,
   PRIMARY KEY  (`id`),
-  KEY `username` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

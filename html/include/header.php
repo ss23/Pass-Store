@@ -28,7 +28,9 @@
 	<a href="/groups.php">Groups</a>
 	<a href="/notes.php">Secure Notes</a>
 	<a href="/logout.php">Logout</a>
-	<? } else { ?>
+	<?php
+	} else {
+	?>
 	<a href="/login.php">Login</a>
 	<a href="/help.php">Help</a>
 	<?php

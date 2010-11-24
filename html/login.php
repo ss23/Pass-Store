@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 		$errors['password'] = true;
 	}
 
-	if (!$errors) {
+	if (empty($errors)) {
 		// More validation, but no point if anything is empty
 		lib('User');
 
@@ -55,7 +55,7 @@ require 'include/header.php';
 	<label for="username">Username:</label>
 	<input type="text" name="username" required>
 	<?php
-	if ($errors['username']) {
+	if (!empty($errors['username'])) {
 		echo "<p class='error username'>Please enter a username</p>";
 	} else {
 		echo "<br>";
@@ -64,7 +64,7 @@ require 'include/header.php';
 	<label for="password">Password:</label>
 	<input type="password" name="password" required >
 	<?php
-	if ($errors['password']) {
+	if (!empty($errors['password'])) {
 		echo "<p class='error password'>Please enter a password</p>";
 	}
 	if (!empty($redirect)) {
@@ -75,7 +75,7 @@ require 'include/header.php';
 	?>
 	<input type="submit" value="Sign In" name="submit">
 	<?php
-	if ($errors['auth']) {
+	if (!empty($errors['auth'])) {
 		echo "<p class='error auth'>Invalid username or password.</p>";
 	} ?>
 </form>

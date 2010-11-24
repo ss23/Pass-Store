@@ -7,8 +7,10 @@ if (count($argv) != 3) {
 	die();
 }
 
-require ('html/include/functions/Sanitize.php');
-require ('html/include/functions/User.php');
+require ('../config/config.php');
+
+require (PATH . 'html/include/functions/Sanitize.php');
+require (PATH . 'html/include/functions/User.php');
 
 $Username = s($argv[1]);
 $Password = user_hash($argv[2], $argv[1]);
@@ -27,14 +29,13 @@ openssl_pkey_export($res, $PrivateKey);
 $pubkey = openssl_pkey_get_details($res);
 $PublicKey = $pubkey["key"];
 
-file_put_contents('./keys/' . $argv[1] . '.pem', $PrivateKey);
-file_put_contents('./keys/' . $argv[1] . '.pub', $PublicKey);
+file_put_contents(PATH . 'keys/' . $argv[1] . '.pem', $PrivateKey);
+file_put_contents(PATH . 'keys/' . $argv[1] . '.pub', $PublicKey);
 
 echo "Certificates generated\n";
 
 // Start the connection to the database
-require ('config/config.php');
-require ('html/include/MyPDO.php');
+require (PATH . 'html/include/MyPDO.php');
 $pdo = new MyPDO();
 
 $stmt = $pdo->prepare('insert into `users` (

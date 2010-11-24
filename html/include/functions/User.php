@@ -1,7 +1,7 @@
 <?php
 
 function user_hash($Password, $Username) {
-	return crypt(user_key($Password, $Username), '$6$rounds=5$' . md5(uniqid(rand(), true)));
+	return crypt(user_key($Password, $Username), '$6$rounds=50000$' . substr(hash('sha512', uniqid(true)), 0, 16));
 }
 
 function user_key($Password, $Username) {
@@ -10,7 +10,6 @@ function user_key($Password, $Username) {
 
 function user_compare($Password, $Username, $HashedPassword) {
 	var_dump(crypt(user_key($Password, $Username), $HashedPassword));
-	var_dump($HashedPassword);
 	return (crypt(user_key($Password, $Username), $HashedPassword) == $HashedPassword);
 }
 

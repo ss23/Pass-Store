@@ -1,4 +1,5 @@
-<?
+<?php
+
 class MyPDO extends PDO {
     public function __construct() {
         $dns = 'mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME;
