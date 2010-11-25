@@ -9,7 +9,6 @@ function user_key($Password, $Username) {
 }
 
 function user_compare($Password, $Username, $HashedPassword) {
-	var_dump(crypt(user_key($Password, $Username), $HashedPassword));
 	return (crypt(user_key($Password, $Username), $HashedPassword) == $HashedPassword);
 }
 
@@ -22,7 +21,7 @@ function user_exists($User) {
 		WHERE `username` = :username');
 	$stmt->bindParam(':username', s($User));
 	$stmt->execute();
-	
+
 	return ($stmt->fetchColumn() > 0);
 }
 
@@ -71,10 +70,9 @@ function user_authenticate($Username, $Password) {
 		if (user_compare($Password, $Username, $row['password'])) {
 			$user = new User($Username, user_key($Password, $Username));
 	                $_SESSION['user'] = &$user;
-			die('worked');
 			session_regenerate_id();
 			return true;
-		} 
+		}
 	}
 	return false;
 }
@@ -90,7 +88,7 @@ class User {
 	public $group;
 
 	private $decryptionKey;
-	
+
 	function __construct($Username, $key) {
 		if (!user_exists($Username)) {
 			return false;
@@ -105,14 +103,14 @@ class User {
 
 	function rehash() {
 		global $pdo;
-		
+
 		$stmt = $pdo->prepare('
 			SELECT `id`, `username`
 			FROM `users`
-			WHERE 
+			WHERE
 				`username` = :username
 		');
-		$stmt->bindParam(':username', $this->username); 
+		$stmt->bindParam(':username', $this->username);
 		$stmt->setFetchMode(PDO::FETCH_INTO, $this);
 		$stmt->execute();
 		$stmt->fetch();

@@ -2,7 +2,6 @@
 
 function password_add($Name, $Description, $Link, $Username, $Password) {
 	global $pdo;
-	echo "Adding password";
 
 	$stmt = $pdo->prepare('insert into `passwords` set
 		`name` = :name,
@@ -14,7 +13,7 @@ function password_add($Name, $Description, $Link, $Username, $Password) {
 	$stmt->bindValue(':description', $Description);
 	$stmt->bindValue(':link', $Link);
 	$stmt->bindValue(':username', $Username);
-	
+
 	$stmt->execute();
 
 	$PasswordID = $pdo->lastInsertId();

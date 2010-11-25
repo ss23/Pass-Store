@@ -20,9 +20,7 @@ for ($i = 0; $i <= 10; $i++) {
 	$Username = common_rand_str(mt_rand(4, 24));
 	$Password = common_rand_str(mt_rand(4, 24), 'ABCDEFGHIJKLMNOPQRSTUVWQYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()-=_+[]\\{}|;\':",./<>?`~');
 
-	//$hash = crypt(user_key($Password, $Username), '$2a$05$' . 'rawr$');
-	$salt = substr(hash('sha512', uniqid(true), true), 0, 16);
-	$hash = crypt(user_key($Password, $Username), '$6$rounds=100000$' . $salt . '$');
+	$hash = user_hash($Password, $Username);
 
 	if (($hash_res = crypt(user_key($Password, $Username), $hash)) == $hash) {
 		// If we're on the last stage of the test

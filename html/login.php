@@ -16,7 +16,7 @@ if (isset($_SESSION['user'])) {
 
 if (isset($_POST['submit'])) {
 	// Oh the joy of manual form validation
-		
+
 	// First, check all compulsary fields aren't blank
 	if (empty($_POST['username'])) {
 		$errors['username'] = true;

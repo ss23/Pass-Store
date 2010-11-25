@@ -1,8 +1,14 @@
 <?php
 
+$JS = '';
 require_once 'include/global.php';
 
 lib('User');
+
+// Delete a password
+if (!empty($_POST['delete'])) {
+
+}
 
 // Get a list of possible passwords
 $stmt = $pdo->prepare('select `passwords`.*, `password_encrypted`.*
@@ -25,6 +31,7 @@ JS;
 require 'include/header.php';
 ?>
 
+<form action="index.php" type="post">
 <table id="password-list">
 	<thead>
 		<tr><th class="input" colspan="7"><input type="search" placeholder="Search for a password" autofocus></th></tr>
@@ -32,6 +39,9 @@ require 'include/header.php';
 	</thead>
 	<tfoot>
 		<tr><td></td><td colspan="5"></td><td></td></tr>
+		<tr><td colspan="7">
+			<input type="submit" name="delete" value="Delete">
+		</td></tr>
 		<tr class="spacer"><td></td></tr>
 	</tfoot>
 	<tbody>
@@ -59,6 +69,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 ?>
 	</tbody>
 </table>
+</form>
 <?php
 
 require 'include/footer.php';
