@@ -22,9 +22,10 @@ $stmt->execute();
 
 
 $JSFiles[] = 'jquery.quicksearch.js';
+
 $JS .= <<<JS
 $(function () {
-        $('#password-list input').quicksearch('#password-list tbody tr');
+	$('#password-list input').quicksearch('#password-list tbody tr');
 });
 JS;
 

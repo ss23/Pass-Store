@@ -7,7 +7,13 @@ require_once '../config/config.php';
 require_once PATH.'html/include/MyPDO.php';
 $GLOBALS['pdo'] = new MyPDO();
 
-// The library (lib) function
+/**
+ * The library (lib) function
+ *
+ * @param string $Library The name of the library file
+ *
+ * @return void
+ */
 function lib($Library) {
 	if (file_exists(PATH."html/include/$Library.php")) {
 		require_once PATH."html/include/$Library.php";

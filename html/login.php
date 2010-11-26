@@ -55,29 +55,30 @@ require 'include/header.php';
 	<label for="username">Username:</label>
 	<input type="text" name="username" required>
 	<?php
-	if (!empty($errors['username'])) {
-		echo "<p class='error username'>Please enter a username</p>";
-	} else {
-		echo "<br>";
-	}
+if (!empty($errors['username'])) {
+	echo "<p class='error username'>Please enter a username</p>";
+} else {
+	echo "<br>";
+}
 	?>
 	<label for="password">Password:</label>
 	<input type="password" name="password" required >
 	<?php
-	if (!empty($errors['password'])) {
-		echo "<p class='error password'>Please enter a password</p>";
-	}
-	if (!empty($redirect)) {
-		echo '<input type="hidden" name="redirect" value="' . $redirect . '" >';
-	} else {
-		echo "<br>";
-	}
+if (!empty($errors['password'])) {
+	echo "<p class='error password'>Please enter a password</p>";
+}
+if (!empty($redirect)) {
+	echo '<input type="hidden" name="redirect" value="' . $redirect . '" >';
+} else {
+	echo "<br>";
+}
 	?>
 	<input type="submit" value="Sign In" name="submit">
 	<?php
-	if (!empty($errors['auth'])) {
-		echo "<p class='error auth'>Invalid username or password.</p>";
-	} ?>
+if (!empty($errors['auth'])) {
+	echo "<p class='error auth'>Invalid username or password.</p>";
+}
+	?>
 </form>
 </div>
 
@@ -86,5 +87,3 @@ require 'include/header.php';
 require 'include/footer.php';
 
 ?>
-
-

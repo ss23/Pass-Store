@@ -1,9 +1,7 @@
 <?php
 
 group_create($name, $type = 'group') {
-	global $pdo;
-	
-	$stmt = $pdo->prepare('
+	$stmt = $GLOBALS['pdo']->prepare('
 		INSERT INTO `groups`
 		(
 			`name`
@@ -16,13 +14,11 @@ group_create($name, $type = 'group') {
 	$stmt->bindParam(':name', $name);
 	$stmt->bindParam(':type', $type);
 	$stmt->execute();
-	return $pdo->lastInsertId();
+	return $GLOBALS['pdo']->lastInsertId();
 }
 
 group_add($gid, $user_id) {
-	global $pdo;
-
-	$stmt = $pdo->prepare('
+	$stmt = $GLOBALS['pdo']->prepare('
 		INSERT INTO `group_users`
 		(
 			`group_id`

@@ -24,7 +24,8 @@ require 'include/header.php';
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-} ?>
+}
+?>
 	</tbody>
 </table>
 
@@ -33,4 +34,3 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 require 'include/footer.php';
 
 ?>
-

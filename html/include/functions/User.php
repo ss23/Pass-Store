@@ -13,9 +13,7 @@ function user_compare($Password, $Username, $HashedPassword) {
 }
 
 function user_exists($User) {
-	global $pdo;
-
-	$stmt = $pdo->prepare('
+	$stmt = $GLOBALS['pdo']->prepare('
 		SELECT count(*)
 		FROM `users`
 		WHERE `username` = :username');
@@ -26,13 +24,11 @@ function user_exists($User) {
 }
 
 function user_create($Username, $Password) {
-	global $pdo;
-
 	if (user_exists($Username)) {
 		return false;
 	}
 
-	$stmt = $pdo->prepare('
+	$stmt = $GLOBALS['pdo']->prepare('
 		INSERT INTO `users`
 		(
 			`username`
@@ -44,7 +40,7 @@ function user_create($Username, $Password) {
 	$stmt->bindValue(':username', s($Username));
 	$stmt->bindValue(':password', user_hash($Password, $Username));
 	$stmt->execute();
-	$uid = $pdo->lastInsertId();
+	$uid = $GLOBALS['pdo']->lastInsertId();
 	$stmt->closeCursor();
 
 	// Create a group for the new user
@@ -56,9 +52,7 @@ function user_create($Username, $Password) {
 }
 
 function user_authenticate($Username, $Password) {
-	global $pdo;
-
-	$stmt = $pdo->prepare('
+	$stmt = $GLOBALS['pdo']->prepare('
 		SELECT `password`
 		FROM `users`
 		WHERE `username` = :username
@@ -102,9 +96,7 @@ class User {
 	}
 
 	function rehash() {
-		global $pdo;
-
-		$stmt = $pdo->prepare('
+		$stmt = $GLOBALS['pdo']->prepare('
 			SELECT `id`, `username`
 			FROM `users`
 			WHERE

@@ -4,8 +4,6 @@ lib('User');
 
 session_start();
 
-global $pdo;
-
 if (isset($_SESSION['id'])) {
 	$stmt = $pdo->prepare('
 		SELECT `id`, UNIX_TIMESTAMP(`last_active`) as last_active, INET_NTOA(`ip`) as ip
@@ -34,7 +32,7 @@ if (isset($_SESSION['id'])) {
 			`id`, `ip`, `last_active`
 		) VALUES (
 			:id, INET_ATON(:ip), now()
-		)	
+		)
 	');
 	$stmt->bindParam(':id', $_SESSION['id']);
 	$stmt->bindParam(':ip', $_SERVER['REMOTE_ADDR']);
@@ -53,9 +51,14 @@ if (isset($_SESSION['id'])) {
 	');
 	$stmt->bindParam(':ip', $_SERVER['REMOTE_ADDR']);
 	$stmt->execute();
-	$_SESSION['id'] = $pdo->lastInsertId(); 
+	$_SESSION['id'] = $pdo->lastInsertId();
 }
 
+/**
+ * Obliterate a session out of existence
+ *
+ * @return void
+ */
 function session_obliterate() {
 	foreach ($_SESSION as $var) {
 		unset($var);
