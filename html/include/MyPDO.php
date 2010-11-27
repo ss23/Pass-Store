@@ -21,7 +21,7 @@ class MyPDO extends PDO {
 	/**
 	 * Prepare a prepared statement with caching
 	 *
-	 * @param string $sql The SQL for the statment
+	 * @param string $sql        The SQL for the statment
 	 * @param string $driveropts Driver Options
 	 *
 	 * @return PDOStatement The resulting prepared PDO Statement object

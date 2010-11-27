@@ -1,17 +1,53 @@
 <?php
 
-function user_hash($Password, $Username) {
-	return crypt(user_key($Password, $Username), '$6$rounds=50000$' . substr(hash('sha512', uniqid(true)), 0, 16));
+/**
+ * Functions and object for the "User"
+ */
+
+/**
+ * Generate a "hash" for the username and a password
+ *
+ * @param string $Username The username to generate the hash with
+ * @param string $Password The password to generate the hash with
+ *
+ * @return string The resulting hash
+ */
+function user_hash($Username, $Password) {
+	return crypt(user_key($Username, $Password), '$6$rounds=50000$' . substr(hash('sha512', uniqid(true)), 0, 16));
 }
 
-function user_key($Password, $Username) {
-	return hash('sha512', $Password . $Username);
+/**
+ * Generate a user "key"
+ *
+ * @param string $Username The username to generate the key with
+ * @param string $Password The password to generate the key with
+ *
+ * @return string The resulting key
+ */
+function user_key($Username, $Password) {
+	return hash('sha512', $Username . $Passwrd);
 }
 
-function user_compare($Password, $Username, $HashedPassword) {
-	return (crypt(user_key($Password, $Username), $HashedPassword) == $HashedPassword);
+/**
+ * Compared a username and password with a hashed password to see if they match
+ *
+ * @param string $Username       The username to generate the key with
+ * @param string $Password       The password to generate the key with
+ * @param string $HashedPassword The hashed password to compare against
+ *
+ * @return bool Whether they matched or not
+ */
+function user_compare($Username, $Password, $HashedPassword) {
+	return (crypt(user_key($Username, $Password), $HashedPassword) == $HashedPassword);
 }
 
+/**
+ * Check whether a user with this username exists
+ *
+ * @param string $User Username to check
+ *
+ * @return bool Whether the user exists or not
+ */
 function user_exists($User) {
 	$stmt = $GLOBALS['pdo']->prepare('
 		SELECT count(*)
@@ -23,6 +59,14 @@ function user_exists($User) {
 	return ($stmt->fetchColumn() > 0);
 }
 
+/**
+ * Create a user with the specified username and password
+ *
+ * @param string $Username The password to generate the key with
+ * @param string $Password The username to generate the key with
+ *
+ * @return string The ID of the new user
+ */
 function user_create($Username, $Password) {
 	if (user_exists($Username)) {
 		return false;
@@ -38,7 +82,7 @@ function user_create($Username, $Password) {
 			, :password
 		)');
 	$stmt->bindValue(':username', s($Username));
-	$stmt->bindValue(':password', user_hash($Password, $Username));
+	$stmt->bindValue(':password', user_hash($Username, $Password));
 	$stmt->execute();
 	$uid = $GLOBALS['pdo']->lastInsertId();
 	$stmt->closeCursor();
@@ -51,6 +95,14 @@ function user_create($Username, $Password) {
 	return $uid;
 }
 
+/**
+ * Authenticate a user with the given Username and Password
+ *
+ * @param string $Username The username
+ * @param string $Password The password
+ *
+ * @return bool Whether the authentication suceeded or not
+ */
 function user_authenticate($Username, $Password) {
 	$stmt = $GLOBALS['pdo']->prepare('
 		SELECT `password`
@@ -61,8 +113,9 @@ function user_authenticate($Username, $Password) {
 	$stmt->execute();
 
 	if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-		if (user_compare($Password, $Username, $row['password'])) {
-			$user = new User($Username, user_key($Password, $Username));
+		if (user_compare($Username, $Password, $row['password'])) {
+			$user = new User($Username, user_key($Username, $Password));
+
 	                $_SESSION['user'] = &$user;
 			session_regenerate_id();
 			return true;
@@ -71,11 +124,19 @@ function user_authenticate($Username, $Password) {
 	return false;
 }
 
-
+/**
+ * Log out the user that's currently logged in
+ *
+ * @return void
+ */
 function user_logout() {
 	unset($_SESSION['user']);
+	session_regenerate_id();
 }
 
+/**
+ * The User class
+ */
 class User {
 	public $id;
 	public $username;
@@ -83,6 +144,12 @@ class User {
 
 	private $decryptionKey;
 
+	/**
+	 * Construct the user class
+	 *
+	 * @param string $Username The username
+	 * @param string $key      The decrpytion key
+	 */
 	function __construct($Username, $key) {
 		if (!user_exists($Username)) {
 			return false;
@@ -95,6 +162,11 @@ class User {
 		$this->decryptionKey = $key;
 	}
 
+	/**
+	 * Update the users object with new information from the database
+	 *
+	 * @return void
+	 */
 	function rehash() {
 		$stmt = $GLOBALS['pdo']->prepare('
 			SELECT `id`, `username`
@@ -108,6 +180,13 @@ class User {
 		$stmt->fetch();
 	}
 
+	/**
+	 * Decrypt the given encryped data
+	 *
+	 * @param binary $Encrypted The encrypted data
+	 *
+	 * @return string Decrypted string
+	 */
 	function decrypt($Encrypted) {
 		// Check that the private key we're using for decryption exists
 		if ((is_readable(PATH . '/keys/' . $this->username . '.pem')) && (!empty($this->decryptionKey))) {
@@ -118,6 +197,13 @@ class User {
 		return false;
 	}
 
+	/**
+	 * Encrypt the given text with this users keys
+	 *
+	 * @param string $PlainText The text to encrypt
+	 *
+	 * @return binary The encrypted data
+	 */
 	function encrypt($PlainText) {
 		if (is_readable(PATH . 'keys/' . $this->username . '.pub')) {
 			openssl_public_encrypt($PlainText, $Encrypted, file_get_contents(PATH . '/keys/' . $this->username . '.pub'));

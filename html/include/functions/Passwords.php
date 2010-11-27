@@ -7,11 +7,11 @@
 /**
  * Add a password into the database
  *
- * @param string $Name The name of the password to be entered under
+ * @param string $Name        The name of the password to be entered under
  * @param string $Description Description of the password
- * @param string $Link Link to the login page for the password this refeers to
- * @param string $Username Username to log in
- * @param string $Password Password to log in
+ * @param string $Link        Link to the login page for the password this refeers to
+ * @param string $Username    Username to log in
+ * @param string $Password    Password to log in
  *
  * @return bool Whether it suceeded or not
  */

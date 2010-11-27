@@ -21,16 +21,16 @@ Simply add new password's as you like, and view them in the index.
 Upcoming Features
 -----------------
 
-User Documentation
-Themes
-Modules
-Logging
-Generate a one time use session decryption key when users log in, destroy it on log out
-Secure notes
-YubiKey Support
-Secure File Upload/sharing
-Groups/User Permissions management
-Some kind of messaging system (WAY in the future)
-New Users on the fly
-Remove users
-User profiles (WAY in the future)
+* User Documentation
+* Themes
+* Modules
+* Logging
+* Generate a one time use session decryption key when users log in, destroy it on log out
+* Secure notes
+* YubiKey Support
+* Secure File Upload/sharing
+* Groups/User Permissions management
+* Some kind of messaging system (WAY in the future)
+* New Users on the fly
+* Remove users
+* User profiles (WAY in the future)
