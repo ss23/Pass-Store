@@ -54,3 +54,18 @@ function password_add($Name, $Description, $Link, $Username, $Password) {
 
 	return true;
 }
+
+/**
+ * Delete a password (actually marks as inactive, but has the same effect)
+ *
+ * @param int $id ID of the password to delete
+ *
+ * @return bool Did it delete?
+ */
+function password_delete($id) {
+	$stmt = $GLOBALS['pdo']->prepare('update `passwords`
+		set `active` = false
+		where `id` = :id');
+	$stmt->bindValue(':id', $id);
+	return $stmt->execute();
+}

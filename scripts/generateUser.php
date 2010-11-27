@@ -7,13 +7,13 @@ if (count($argv) != 3) {
 	die();
 }
 
-require ('../config/config.php');
+require (realpath(dirname(__FILE__)) . '/../config/config.php');
 
 require (PATH . 'html/include/functions/Sanitize.php');
 require (PATH . 'html/include/functions/User.php');
 
 $Username = s($argv[1]);
-$Password = user_hash($argv[2], $argv[1]);
+$Password = user_hash($argv[1], $argv[2]);
 echo "Username: " . $Username . "\n";
 echo "Hashed Password: " . $Password . "\n";
 

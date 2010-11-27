@@ -7,7 +7,14 @@ lib('User');
 
 // Delete a password
 if (!empty($_POST['delete'])) {
-
+	if (is_array($_POST['checkbox'])) {
+		// Delete the password from the database.
+		// TODO: Add some sort of "delete" permissions
+		lib('Passwords');
+		foreach ($_POST['checkbox'] as $id => $value) {
+			password_delete($id);
+		}
+	}
 }
 
 // Get a list of possible passwords
@@ -32,7 +39,7 @@ JS;
 require 'include/header.php';
 ?>
 
-<form action="index.php" type="post">
+<form action="index.php" method="post">
 <table id="password-list">
 	<thead>
 		<tr><th class="input" colspan="7"><input type="search" placeholder="Search for a password" autofocus></th></tr>

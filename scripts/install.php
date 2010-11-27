@@ -3,14 +3,14 @@
 
 echo "Installing Pass-Store.\n";
 
-if (!is_readable('../config/config.php')) {
+if (!is_readable(realpath(dirname(__FILE__)) . '/../config/config.php')) {
 	echo "Cannot read /config/config.php. Please check that the user running this script has permission to read it.\n";
 	echo "Exiting.\n";
 	die();
 }
 
 echo "Reading configuration file.\n";
-require_once ('../config/config.php');
+require (realpath(dirname(__FILE__)) . '/../config/config.php');
 
 echo "Verifying database connection.\n";
 require (PATH . 'html/include/MyPDO.php');
@@ -65,12 +65,14 @@ $Password = s(read_line());
 
 require (PATH . 'html/include/functions/User.php');
 
+$Password = user_hash($Username, $Password);
+
 echo "Hashed Password of '" . $Password . "' generated.\n";
 
 echo "Generating OpenSSL Keys";
 
 // Create the keypair
-$res = openssl_pkey_new(array('encrypt_key' => user_key($Password, $Username)));
+$res = openssl_pkey_new(array('encrypt_key' => user_key($Username, $Password)));
 echo "."; // Progress
 
 // Get private key

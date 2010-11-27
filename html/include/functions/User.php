@@ -25,7 +25,7 @@ function user_hash($Username, $Password) {
  * @return string The resulting key
  */
 function user_key($Username, $Password) {
-	return hash('sha512', $Username . $Passwrd);
+	return hash('sha512', $Username . $Password);
 }
 
 /**
