@@ -34,5 +34,6 @@ lib('Sanitize');
 if (!defined('NO_LOGIN')) {
 	if (!isset($_SESSION['user'])) {
 		header('Location: /login.php?redirect=' . $_SERVER['PHP_SELF']);
+		die();
 	}
 }
