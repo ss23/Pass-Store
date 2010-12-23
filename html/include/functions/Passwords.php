@@ -69,3 +69,7 @@ function password_delete($id) {
 	$stmt->bindValue(':id', $id);
 	return $stmt->execute();
 }
+
+class Password {
+
+}

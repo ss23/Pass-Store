@@ -12,7 +12,8 @@ h4 {
 }
 
 input[type="submit"] {
-	padding: 5px 10px;
+	padding: 0px 7px 4px;
+	font-family: 'Segoe UI', Tahoma, Verdana;
 }
 
 .title-bar {
@@ -154,6 +155,10 @@ table tfoot td {
 #password-list tfoot tr.spacer td {
 	background-color: transparent;
 	height: 10px;
+}
+
+#password-list tfoot .options {
+	padding: 3px 12px 0;
 }
 
 #new_password_form {

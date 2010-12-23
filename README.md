@@ -1,6 +1,8 @@
 Pass Store
 ==========
 
+Open-source, self hosted, server software to store shared company passwords (and other password-like data).
+
 Want to store communal passwords securely? Pass Store does just that. Create users that can
 add passwords, delete passwords, and edit passwords. You're in control of who can do what,
 and you get to see exactly who does what.
