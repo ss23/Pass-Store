@@ -7,9 +7,9 @@ if (!empty($Page['title'])) {
 	echo $Page['title'] . ' - ';
 }
 	?>PassStore</title>
-	<link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+	<link rel="shortcut icon" type="image/png" href="<?php echo WEBPATH; ?>/images/favicon.png">
 	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css">
-	<link rel="stylesheet" type="text/css" href="/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo WEBPATH; ?>/css/styles.css">
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <?php
 if (!empty($JSFiles)) {
@@ -26,16 +26,16 @@ if (!empty($JSFiles)) {
 
 <div class="title-bar">
 <?php if (isset($_SESSION['user'])) { ?>
-	<a href="/">Home</a>
-	<a href="/add_password.php">Add a Password</a>
-	<a href="/groups.php">Groups</a>
-	<a href="/notes.php">Secure Notes</a>
-	<a href="/logout.php">Logout</a>
+	<a href="<?php echo WEBPATH; ?>/">Home</a>
+	<a href="<?php echo WEBPATH; ?>/add_password.php">Add a Password</a>
+	<a href="<?php echo WEBPATH; ?>/groups.php">Groups</a>
+	<a href="<?php echo WEBPATH; ?>/notes.php">Secure Notes</a>
+	<a href="<?php echo WEBPATH; ?>/logout.php">Logout</a>
 	<?php
 } else {
 	?>
-	<a href="/login.php">Login</a>
-	<a href="/help.php">Help</a>
+	<a href="<?php echo WEBPATH; ?>/login.php">Login</a>
+	<a href="<?php echo WEBPATH; ?>/help.php">Help</a>
 	<?php
 	} ?>
 </div>

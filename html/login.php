@@ -7,7 +7,7 @@ require "include/global.php";
 if (isset($_REQUEST['redirect'])) {
 	$redirect = $_REQUEST['redirect'];
 } else {
-	$redirect = '/index.php';
+	$redirect = WEBPATH.'/index.php';
 }
 
 if (isset($_SESSION['user'])) {
@@ -50,7 +50,7 @@ require 'include/header.php';
 
 ?>
 <div class="form_container" id="login_form_container">
-<form action="/login.php" method="post" id="login_form">
+<form action="<?php echo WEBPATH; ?>/login.php" method="post" id="login_form">
 	<h4>Sign In</h4>
 	<label for="username">Username:</label>
 	<input type="text" name="username" required>
