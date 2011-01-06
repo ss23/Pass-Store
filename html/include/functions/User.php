@@ -116,7 +116,7 @@ function user_authenticate($Username, $Password) {
 		if (user_compare($Username, $Password, $row['password'])) {
 			$user = new User($Username, user_key($Username, $Password));
 
-	                $_SESSION['user'] = &$user;
+			$_SESSION['user'] = &$user;
 			session_regenerate_id();
 			return true;
 		}
