@@ -34,3 +34,22 @@ function common_rand_str($length = 32, $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcde
 	// Return the string
 	return $string;
 }
+
+function common_get_relative_path($path)
+{
+	$dr = $_SERVER['DOCUMENT_ROOT']; //Probably Apache situated
+
+	if (empty($dr)) //Probably IIS situated
+	{
+		$pt = isset($_SERVER['PATH_TRANSLATED'])
+			? $_SERVER['PATH_TRANSLATED']
+			: $_SERVER['ORIG_PATH_TRANSLATED'];
+		//Get the document root from the translated path.
+		$pt = str_replace('\\\\', '/', $pt);
+		$dr = substr($pt, 0, -strlen($_SERVER['SCRIPT_NAME']));
+	}
+
+	$dr = str_replace('\\\\', '/', $dr);
+
+	return substr(str_replace('\\', '/', str_replace('\\\\', '/', $path)), strlen($dr));
+}
