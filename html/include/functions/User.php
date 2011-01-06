@@ -13,7 +13,7 @@
  * @return string The resulting hash
  */
 function user_hash($Username, $Password) {
-	return crypt(user_key($Username, $Password), '$6$rounds=50000$' . substr(hash('sha512', uniqid(true)), 0, 16));
+	return crypt(user_key($Username, $Password), '$6$rounds=50000$' . substr(hash('sha512', uniqid()), 0, 16));
 }
 
 /**
