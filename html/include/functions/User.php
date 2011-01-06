@@ -53,7 +53,7 @@ function user_exists($User) {
 		SELECT count(*)
 		FROM `users`
 		WHERE `username` = :username');
-	$stmt->bindParam(':username', s($User));
+	$stmt->bindValue(':username', s($User));
 	$stmt->execute();
 
 	return ($stmt->fetchColumn() > 0);
