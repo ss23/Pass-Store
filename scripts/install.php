@@ -73,6 +73,10 @@ echo "Generating OpenSSL Keys";
 
 // Create the keypair
 $res = openssl_pkey_new(array('encrypt_key' => user_key($Username, $Password)));
+if (empty($res))
+{
+	echo "OpenSSL is not configured properly. Continuing\n";
+}
 echo "."; // Progress
 
 // Get private key
