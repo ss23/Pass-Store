@@ -13,6 +13,6 @@ define('DB_NAME', 'pass');	// Name of the database
 
 define('PATH', realpath(dirname(__FILE__) . '/../') . '/');// Full path to the application. The path above the folder containing this one
 
-require_once(PATH.'html/include/functions/Common.php');
+require_once(PATH . 'html/include/functions/Common.php');
 
-define('WEBPATH', common_get_relative_path(PATH.'html'));
+define('WEBPATH', common_get_relative_path(PATH . 'html'));
