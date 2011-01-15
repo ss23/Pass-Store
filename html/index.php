@@ -12,7 +12,11 @@ if (!empty($_POST['delete'])) {
 		// TODO: Add some sort of "delete" permissions
 		lib('Passwords');
 		foreach ($_POST['checkbox'] as $id => $value) {
-			password_delete($id);
+			$Password = new Password($id);
+			if ($Password) {
+				$Password->delete();
+				unset($Password);
+			}
 		}
 	}
 }

@@ -13,7 +13,7 @@
  * @param string $Username    Username to log in
  * @param string $Password    Password to log in
  *
- * @return bool Whether it suceeded or not
+ * @return mixed ID of the password entered or false on failure.
  */
 function password_add($Name, $Description, $Link, $Username, $Password) {
 	$stmt = $GLOBALS['pdo']->prepare('insert into `passwords` set
@@ -52,24 +52,59 @@ function password_add($Name, $Description, $Link, $Username, $Password) {
 		}
 	}
 
-	return true;
-}
-
-/**
- * Delete a password (actually marks as inactive, but has the same effect)
- *
- * @param int $id ID of the password to delete
- *
- * @return bool Did it delete?
- */
-function password_delete($id) {
-	$stmt = $GLOBALS['pdo']->prepare('update `passwords`
-		set `active` = false
-		where `id` = :id');
-	$stmt->bindValue(':id', $id);
-	return $stmt->execute();
+	return $PasswordID;
 }
 
 class Password {
+	public $id;
+	public $name;
+	public $description;
+	public $link;
+	public $username;
+	public $active;
 
+	/**
+	 * Construct the Password class
+	 *
+	 * @param int $id ID of the password we're constructing.
+	 */
+	public function __construct($id) {
+		var_dump($id);
+		if (!ctype_digit($id) and !is_int($id)) {
+			return false;
+		}
+		$this->id = (int)$id;
+		$this->rehash();
+	}
+
+	/**
+	 * Update / set the properties of the class
+	 *
+	 * @return void
+	 */
+	public function rehash() {
+                $stmt = $GLOBALS['pdo']->prepare('
+                        SELECT `id`, `name`, `description`, `link`, `username`, `active`
+                        FROM `passwords`
+                        WHERE
+                                `id` = :id
+                ');
+                $stmt->bindParam(':id', $this->id);
+                $stmt->setFetchMode(PDO::FETCH_INTO, $this);
+                $stmt->execute();
+                $stmt->fetch();
+	}
+
+	/**
+	 * Delete a password (actually marks as inactive, but has the same effect)
+	 *
+	 * @return bool Did it delete?
+	 */
+	public function delete() {
+		$stmt = $GLOBALS['pdo']->prepare('update `passwords`
+			set `active` = false
+			where `id` = :id');
+		$stmt->bindValue(':id', $this->id);
+		return $stmt->execute();
+	}
 }

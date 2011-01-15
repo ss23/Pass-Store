@@ -35,6 +35,13 @@ function common_rand_str($length = 32, $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcde
 	return $string;
 }
 
+/**
+ * Retrive the elative path
+ *
+ * @param string $path The path
+ *
+ * @return string The relative path
+ */
 function common_get_relative_path($path) {
 	$dr = $_SERVER['DOCUMENT_ROOT']; //Probably Apache situated
 
