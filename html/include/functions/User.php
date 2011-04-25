@@ -198,6 +198,26 @@ class User {
 	}
 
 	/**
+	 * Decrypt given a Password object
+	 *
+	 * @param object $Password Password object to decrypt
+	 *
+	 * @return string Decrypted string
+	 */
+	public function decryptPassword(Password $Password) {
+		$stmt = $GLOBALS['pdo']->prepare('select `password_encrypted`.`blob`
+			from  `passwords`, `password_encrypted`
+			where `passwords`.`id` = `password_encrypted`.`password_id`
+			and `password_encrypted`.`user_id` = :user_id
+			and `passwords`.`id` = :id
+		');
+		$stmt->bindParam(':user_id', $user->id);
+		$stmt->bindParam(':id', $Password->id);
+		$stmt->execute();
+		return $this->decrypt($stmt->fetchColumn());
+	}
+
+	/**
 	 * Encrypt the given text with this users keys
 	 *
 	 * @param string $PlainText The text to encrypt

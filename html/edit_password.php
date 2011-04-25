@@ -2,25 +2,27 @@
 
 require 'include/global.php';
 
-lib('Passwords');
-
-if (isset($_POST['save'])) {
-	// I LOVE manual form validation
-	// TODO: Write it
-
-	if (password_edit($_GET['id'], $_POST['name'], $_POST['description'], $_POST['link'], $_POST['username'], $_POST['password'])) {
-		$pass_saved = true;
-	}
-}
-
-// Get the values for the password
-
-
 include 'include/header.php';
 
-if (!empty($pass_saved)) {
-	echo "<h4>Password Saved</h4>";
+if (empty($_GET['id']) or !ctype_digit($_GET['id'])) {
+        die('Invalid ID');
 }
+
+lib('Passwords');
+
+if (isset($_POST['update'])) {
+        // I LOVE manual form validation
+        // TODO: Write it
+
+        if (password_edit($_GET['id'], $_POST['name'], $_POST['description'], $_POST['link'], $_POST['username'], $_POST['password'])) {
+                echo "<h4>Password Saved</h4>";
+		die();
+        }
+}
+
+// Instantiate the password object and start fetching values
+$Password = new Password($_GET['id']);
+
 ?>
 
 <form action="edit_password.php" method="post">
@@ -29,31 +31,33 @@ if (!empty($pass_saved)) {
 	<div class="inner">
 
 	<label for="name">Name:</label>
-	<input type="name" name="name" autocomplete="off">
+	<input type="name" name="name" autocomplete="off" value="<?php echo htmlspecialchars($Password->name, ENT_QUOTES); ?>">
 	<br>
 
 	<label for="description">Description:</label>
-	<textarea name="description" autocomplete="off" cols="23"></textarea>
+	<textarea name="description" autocomplete="off" cols="23"><?php echo htmlspecialchars($Password->description, ENT_QUOTES); ?></textarea>
 	<br>
 
-	<label for="url">URL:</label>
-	<input type="url" name="link" value="http://www.">
+	<label for="link">Link:</label>
+	<input type="url" name="link" value="<?php echo htmlspecialchars($Password->link, ENT_QUOTES); ?>">
 	<br>
 
 	<br><br>
 	<label for="username">Username:</label>
-	<input type="text" name="username" autocomplete="off">
+	<input type="text" name="username" autocomplete="off" value="<?php echo htmlspecialchars($Password->username, ENT_QUOTES); ?>">
 	<br>
 
 	<label for="password">Password:</label>
 	<input type="password" name="password" autocomplete="off">
+	<small>Leave blank to remain unchanged</small>
 	<br>
 
-	<input type="submit" name='create' value="Create">
+	<input type="submit" name="update" value="Update">
 
 	</div><!-- inner -->
 </div>
 
+<!--
 <table id="groups">
 	<thead>
 		<tr class="menu">
@@ -76,8 +80,8 @@ if (!empty($pass_saved)) {
 	<tbody>
 
 	</tbody>
-</div>
-
+</table>
+-->
 </form>
 <?php
 
