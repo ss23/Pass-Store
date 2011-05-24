@@ -12,6 +12,11 @@ if (!is_readable(realpath(dirname(__FILE__)) . '/../config/config.php')) {
 echo "Reading configuration file.\n";
 require (realpath(dirname(__FILE__)) . '/../config/config.php');
 
+if (!defined('KEY') && (strlen(KEY) < 12)) {
+	echo "Please define a KEY in the configuration file. It must be longer than 12 characters.\n";
+	die();
+}
+
 echo "Verifying database connection.\n";
 require (PATH . 'html/include/MyPDO.php');
 
@@ -72,7 +77,7 @@ echo "Hashed Password of '" . $Password . "' generated.\n";
 echo "Generating OpenSSL Keys";
 
 // Create the keypair
-$res = openssl_pkey_new(array('encrypt_key' => user_key($Username, $Password)));
+$res = openssl_pkey_new(array('encrypt_key' => KEY));
 if (empty($res)) {
 	echo "OpenSSL is not configured properly. See http://www.php.net/manual/en/openssl.installation.php\n";
 	echo "Exiting\n";
@@ -90,23 +95,23 @@ $pubkey = openssl_pkey_get_details($res);
 $PublicKey = $pubkey["key"];
 echo "."; // Progress
 
-file_put_contents(PATH . 'keys/' . $Username . '.pem', $PrivateKey);
-file_put_contents(PATH . 'keys/' . $Username . '.pub', $PublicKey);
+file_put_contents(PATH . 'keys/key.pem', $PrivateKey);
+file_put_contents(PATH . 'keys/key.pub', $PublicKey);
 echo "\n"; // Finish progress
 
-echo "Certificates generated.\n";
+echo "Keys generated.\n";
 
 echo "Inserting user into database.\n";
 
 $stmt = $pdo->prepare('insert into `users` (
-                `username`, `password`
-                ) values (
-                :username, :password
-                )');
+		`username`, `password`
+	) values (
+		:username, :password
+	)');
 $stmt->bindParam(':username', $Username);
 $stmt->bindParam(':password', $Password);
 if (!$stmt->execute()) {
-        echo "Automatic entry to database failed. Please do this manually.\n";
+	echo "Automatic entry to database failed. Please do this manually.\n";
 	echo "Exiting.\n";
 	die();
 }

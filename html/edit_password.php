@@ -10,22 +10,31 @@ if (empty($_GET['id']) or !ctype_digit($_GET['id'])) {
 
 lib('Passwords');
 
-if (isset($_POST['update'])) {
-        // I LOVE manual form validation
-        // TODO: Write it
-
-        if (password_edit($_GET['id'], $_POST['name'], $_POST['description'], $_POST['link'], $_POST['username'], $_POST['password'])) {
-                echo "<h4>Password Saved</h4>";
-		die();
-        }
-}
-
 // Instantiate the password object and start fetching values
 $Password = new Password($_GET['id']);
 
+
+if (isset($_POST['update'])) {
+	// I LOVE manual form validation
+	// TODO: Write it
+
+	$Password->name = $_POST['name'];
+	$Password->description = $_POST['description'];
+	$Password->link = $_POST['link'];
+	$Password->username = $_POST['username'];
+
+	if ($Password->save()) {
+		echo "<h4>Password Saved</h4>";
+		die();
+        } else {
+		echo "<h4>Error</h4>";
+		die();
+	}
+}
+
 ?>
 
-<form action="edit_password.php" method="post">
+<form method="post">
 
 <div class="form_container" id="edit_password_form">
 	<div class="inner">

@@ -8,9 +8,9 @@ if (!empty($Page['title'])) {
 }
 	?>PassStore</title>
 	<link rel="shortcut icon" type="image/png" href="<?php echo WEBPATH; ?>/images/favicon.png">
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css"> -->
 	<link rel="stylesheet" type="text/css" href="<?php echo WEBPATH; ?>/css/styles.css">
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
 <?php
 if (!empty($JSFiles)) {
 	foreach ($JSFiles as $File) {

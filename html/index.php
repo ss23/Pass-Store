@@ -4,6 +4,7 @@ $JS = '';
 require_once 'include/global.php';
 
 lib('User');
+lib('Passwords');
 
 // Delete a password
 if (!empty($_POST['delete'])) {
@@ -22,12 +23,9 @@ if (!empty($_POST['delete'])) {
 }
 
 // Get a list of possible passwords
-$stmt = $pdo->prepare('select `passwords`.*, `password_encrypted`.*
-	from  `passwords`, `password_encrypted`
-	where `passwords`.`id` = `password_encrypted`.`password_id`
-	  and `passwords`.`active` = 1
-	  and `password_encrypted`.`user_id` = :user_id
-');
+$stmt = $pdo->prepare('select id
+	from  `passwords`
+	where `passwords`.`active` = 1');
 $stmt->bindParam(':user_id', $user->id);
 $stmt->execute();
 
@@ -60,21 +58,16 @@ require 'include/header.php';
 <?php
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	$Password = $user->decrypt($row['blob']);
+	$Password = new Password($row['id']);
 
-	if (strlen($row['description']) > 60) {
-		$Description = substr($row['description'], 0, 60) . '...';
-	} else {
-		$Description = $row['description'];
-	}
 	echo "<tr>\n\t\t";
 	echo "<td></td>\n\t\t";
-	echo '<td><input type="checkbox" name="checkbox[' . htmlspecialchars($row['id'], ENT_QUOTES) . ']"></td>' . "\n\t\t";
-        echo '<td><a target="_blank" href="' . htmlspecialchars($row['link'], ENT_QUOTES) . '">' . htmlspecialchars($row['name']) . "</td>\n\t\t";
-        echo '<td>' . htmlspecialchars($row['username']) . "</td>\n\t\t";
-        echo '<td class="password"><span class="mask">********</span><span class="real">' . htmlspecialchars($Password) . "</span></td>\n\t\t";
-	echo '<td class="desc">' . htmlspecialchars($Description) . '<span class="full-desc">' . htmlspecialchars($row['description']) . "</span></td>\n\t\t";
-	echo '<td><a href="/edit_password.php?id=' . htmlspecialchars($row['id'], ENT_QUOTES) . '">Edit</td>' . "\n\t\t";
+	echo '<td><input type="checkbox" name="checkbox[' . htmlspecialchars($Password->id, ENT_QUOTES) . ']"></td>' . "\n\t\t";
+	echo '<td><a target="_blank" href="' . htmlspecialchars($Password->link, ENT_QUOTES) . '">' . htmlspecialchars($Password->name) . "</td>\n\t\t";
+	echo '<td>' . htmlspecialchars($Password->username) . "</td>\n\t\t";
+	echo '<td class="password"><span class="mask">********</span><span class="real">' . htmlspecialchars($Password->decrypt()) . "</span></td>\n\t\t";
+	echo '<td class="desc">' . htmlspecialchars($Password->shortDescription()) . '<span class="full-desc">' . htmlspecialchars($Password->description) . "</span></td>\n\t\t";
+	echo '<td><a href="/edit_password.php?id=' . $Password->id . '">Edit</td>' . "\n\t\t";
 	echo "<td></td>\n\t";
 	echo "</tr>\n\t";
 }

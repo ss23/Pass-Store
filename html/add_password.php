@@ -7,7 +7,7 @@ if (isset($_POST['create'])) {
 	// TODO: Write it
 
 	lib('Passwords');
-	if (password_add($_POST['name'], $_POST['description'], $_POST['link'], $_POST['username'], $_POST['password'])) {
+	if (Password::create($_POST['name'], $_POST['description'], $_POST['link'], $_POST['username'], $_POST['password'])) {
 		$pass_added = true;
 	}
 }
