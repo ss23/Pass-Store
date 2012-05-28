@@ -40,5 +40,5 @@ Why not just use X?
 
 If you find a product that does what this is planning to do, feel free to let me know so I can <strike>steal code and ideas</strike> consider it as a valid alternative.
 In the mean time, people have suggested KeePass and LastPass as "alternatives".
-KeePass isn't suited to a group of 5+ people, all having access to the same, live, database (without having to worry about locking issues), with fine grained permissions, groups, IDS, auditing, and easily configured access control through a webserver. However, as far as I'm aware, it meets the criteria of storing the passwords properly. Another thing to note is that it's not opensource, which could be a minus to some people, but is a plus to most.
+KeePass isn't suited to a group of 5+ people, all having access to the same, live, database (without having to worry about locking issues), with fine grained permissions, groups, IDS, auditing, and easily configured access control through a webserver. However, as far as I'm aware, it meets the criteria of storing the passwords properly.
 LastPass, while it might meet the criteria of storing passwords, isn't made for corporate usage at *all*. Quite simply, it is a one user product, which is fine, it does an amazing job, and I wouldn't mind borrowing a lot of their ideas and UI inovations if I could. However, this simply isn't a solution.
